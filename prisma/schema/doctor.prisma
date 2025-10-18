@@ -2,7 +2,7 @@ model Doctor {
     id                  String   @id @default(uuid())
     email               String   @unique
     name                String
-    profilePhoto        String
+    profilePhoto        String?
     contactNumber       String
     address             String
     registrationNumber  String

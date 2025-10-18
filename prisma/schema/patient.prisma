@@ -2,9 +2,9 @@ model Patient {
     id            String   @id @default(uuid())
     email         String   @unique
     name          String
-    profilePhoto  String
-    contactNumber String
-    address       String
+    profilePhoto  String?
+    contactNumber String?
+    address       String?
     isDeleted     Boolean  @default(false)
     createdAt     DateTime @default(now())
     updatedAt     DateTime @updatedAt
