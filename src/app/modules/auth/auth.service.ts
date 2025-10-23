@@ -1,7 +1,7 @@
 import { UserStatus } from "@prisma/client"
 import { prisma } from "../../shared/prisma"
 import bcrypt from "bcryptjs"
-import { jwtHelpers } from "../../helper/jwtHelper"
+import { jwtHelper } from "../../helper/jwtHelper"
 
 const login =  async (payload:{email:string, password:string}) =>{
     const user = await prisma.user.findUniqueOrThrow({
@@ -10,15 +10,15 @@ const login =  async (payload:{email:string, password:string}) =>{
             status: UserStatus.ACTIVE
         }
     })
-    console.log(await bcrypt.compare(user.password, payload.password))
+    // console.log(await bcrypt.compare(user.password, payload.password))
     const isCorrectPassword = await bcrypt.compare(payload.password, user.password)
 
     if(!isCorrectPassword){
         throw new Error("Password is Incorrect")
     }
 
-    const accessToken = jwtHelpers.generateToken({email:user.email, role:user.role, }, "abcd", "1h")
-    const refreshToken = jwtHelpers.generateToken({email:user.email, role:user.role, }, "dfgsdfgsdfgsdfg", "10d")
+    const accessToken = jwtHelper.generateToken({email:user.email, role:user.role, }, "abcd", "1h")
+    const refreshToken = jwtHelper.generateToken({email:user.email, role:user.role, }, "dfgsdfgsdfgsdfg", "10d")
 
     return {
         accessToken,
